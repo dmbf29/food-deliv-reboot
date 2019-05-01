@@ -60,7 +60,9 @@ class Router
     when 3 then @customers_controller.list
     when 4 then @customers_controller.add
     when 8 then @employee = nil
-    when 9 then @running = false
+    when 9
+      @employee = nil
+      @running = false
     else
       puts "Try again..."
     end
