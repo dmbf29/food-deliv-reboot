@@ -1,8 +1,9 @@
 class Router
-  def initialize(meals_controller, customers_controller, sessions_controller)
+  def initialize(meals_controller, customers_controller, sessions_controller, orders_controller)
     @meals_controller = meals_controller
     @customers_controller = customers_controller
     @sessions_controller = sessions_controller
+    @orders_controller = orders_controller
     @running = true
   end
 
@@ -35,6 +36,8 @@ class Router
     puts "2 - Add a meal"
     puts "3 - List all customers"
     puts "4 - Add a customer"
+    puts "5 - List undelivered orders"
+    puts "6 - Create an order"
     puts "8 - Sign out"
     puts "9 - Quit"
     print "> "
@@ -46,7 +49,8 @@ class Router
     puts "------------ MENU ------------"
     puts "------------------------------"
     puts "What do you want to do"
-    puts "1 - TODO"
+    puts "1 - List my undelivered orders"
+    puts "2 - Mark order as delivered"
     puts "8 - Sign out"
     puts "9 - Quit"
     print "> "
@@ -59,6 +63,8 @@ class Router
     when 2 then @meals_controller.add
     when 3 then @customers_controller.list
     when 4 then @customers_controller.add
+    when 5 then @orders_controller.list_undelivered_orders
+    when 6 then @orders_controller.create
     when 8 then @employee = nil
     when 9
       @employee = nil
@@ -70,8 +76,12 @@ class Router
 
   def delivery_action(choice)
     case choice
-    # when 1 then TODO
-    when 9 then @running = false
+    when 1 then @orders_controller.list_my_orders(@employee)
+    when 2 then @orders_controller.mark_as_delivered(@employee)
+    when 8 then @employee = nil
+    when 9
+      @employee = nil
+      @running = false
     else
       puts "Try again..."
     end

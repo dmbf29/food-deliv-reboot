@@ -12,7 +12,7 @@ class SessionsController
     # tell view to ask for password
     password = @sessions_view.ask_for_("password")
     # @ask employees repo for the employee w/username
-    employee = @employee_repository.find(username)
+    employee = @employee_repository.find_by_username(username)
 
     if employee && employee.password == password
       @sessions_view.success_sign_in
